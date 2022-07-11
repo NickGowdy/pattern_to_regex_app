@@ -1,4 +1,4 @@
-defmodule TokenParser.GreedyTest do
+defmodule TokenParser.Greedy.Test do
   use ExUnit.Case, async: true
 
   test "Can verify greedy token" do

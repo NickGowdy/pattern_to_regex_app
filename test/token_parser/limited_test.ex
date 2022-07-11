@@ -1,4 +1,4 @@
-defmodule TokenParser.LimitedTest do
+defmodule TokenParser.Limited.Test do
   use ExUnit.Case, async: true
 
   test "Can verify limited token" do

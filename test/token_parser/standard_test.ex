@@ -1,4 +1,4 @@
-defmodule TokenParser.StandardTest do
+defmodule TokenParser.Standard.Test do
   use ExUnit.Case, async: true
 
   test "Can very standard token" do
