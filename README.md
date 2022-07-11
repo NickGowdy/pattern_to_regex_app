@@ -17,7 +17,7 @@ nix-shell
 
 If `nix-shell` isn't recognised, please restart the terminal.
 
-and to use Elixir run
+To use Elixir run
 ```
 mix deps.get --all
 ``` 
