@@ -1,4 +1,4 @@
-# AlertLogic
+# Pattern to regex app
 
 **This application translates a string sequence with tokens (greedy, lazy) into a regex**
 
