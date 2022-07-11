@@ -42,10 +42,14 @@ and building a regex based on a basic algorithm that looks at the string values 
 (standard, greedy, lazy etc). This part of the code has unit tests to verify the creation of the regex works
 correctly.
 
+There are token parser files for the different token types. The idea is if there is a new token type, the engineer would follow the same
+pattern and create a new <token_type>.ex file.
+
 The regex string is outputted from the Elixir module and used with pcre2grep which writes all the correct matches to `output.txt`
 
 ## Areas of improvement
 Some of the tokens work on the assumption that it's a single digit length, for example `%{1S3}"` if it was `%{1S12}"` it would not work correctly. I would do a refactor to make it handle any length.
+
 
 
 
