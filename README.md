@@ -28,6 +28,11 @@ Finally to run the program use:
 cat input.txt |  sh program "foo %{0} is a %{1S3}" > output.txt
 ```
 
+To generate docs run:
+```
+mix docs
+```
+
 ## Notes
 
 To run the program based on the specification, there is a bash script called program. This is so the terminal can be used to `cat` the data from the file `input.txt` into program (bash script).
