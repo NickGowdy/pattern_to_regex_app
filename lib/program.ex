@@ -1,7 +1,7 @@
 defmodule Program do
    @moduledoc """
-  This is a module that takes a pattern specification provided
-  as a commandline arguement into a regex.
+  This is a module that takes a pattern specification (as a binary) provided
+  through program.sh and returns a regex string to be used by pcre2grep
   """
 
   @spec main(binary) :: :ok
