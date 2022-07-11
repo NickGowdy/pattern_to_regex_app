@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Give access to Elixir module
+chmod +x ./lib/alert_logic.ex
+
+echo "print message...."
