@@ -1,4 +1,4 @@
-defmodule RegexBuilderTest do
+defmodule Regex.Builder.Test do
   use ExUnit.Case, async: true
 
   test "Match regex with string that has standard tokens" do
