@@ -1,6 +1,14 @@
 #!/bin/bash
 
 # Give access to Elixir module
-chmod +x ./lib/alert_logic.ex
+chmod +x ./lib/program.ex
 
-echo "print message...."
+# Get arg passed to program.sh
+token=$1
+
+# Get regex based on pattern sequence
+regex=$(mix run -e "Program.main('${token}')" <&-)
+
+# Getting matches using regex
+pcre2grep "${regex}"
+
