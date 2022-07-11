@@ -8,7 +8,7 @@ defmodule Program do
   def main(args) do
     args
     |> convert_to_string()
-    |> Regex.RegexBuilder.build()
+    |> Regex.Builder.build()
     |> Regex.source()
     |> IO.puts()
   end

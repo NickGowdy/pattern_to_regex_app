@@ -1,4 +1,4 @@
-defmodule Regex.RegexBuilder do
+defmodule Regex.Builder do
   alias TokenParser.{Limited, Simple, Greedy}
 
   @doc """
@@ -8,7 +8,7 @@ defmodule Regex.RegexBuilder do
 
   ## Examples
 
-      iex> Regex.RegexBuilder.build("foo %{0} is a %{1}")
+      iex> Regex.Builder.build("foo %{0} is a %{1}")
       ~r/foo [a-zA-Z ]{0,} is a [a-zA-Z ]{0,}/
 
   """

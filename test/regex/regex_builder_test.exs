@@ -3,7 +3,7 @@ defmodule RegexBuilderTest do
 
   test "Match regex with string that has standard tokens" do
     pattern = "foo %{0} is a %{1}"
-    regex =  Regex.RegexBuilder.build(pattern)
+    regex =  Regex.Builder.build(pattern)
 
     test_case_1 = "foo blah is a bar"
     test_case_2 = "foo blah is a very big boat;"
@@ -20,7 +20,7 @@ defmodule RegexBuilderTest do
 
   test "Match regex with string that has space limiation token" do
     pattern = "foo %{0} is a %{1S0}"
-    regex = Regex.RegexBuilder.build(pattern)
+    regex = Regex.Builder.build(pattern)
 
     test_case_1 = "foo blah is a bar"
     test_case_2 = "foo blah is a very big boat;"
@@ -37,7 +37,7 @@ defmodule RegexBuilderTest do
 
   test "Match regex with string that has greedy token" do
     pattern = "the %{0S1} %{1} ran away"
-    regex = Regex.RegexBuilder.build(pattern)
+    regex = Regex.Builder.build(pattern)
 
     test_case_1 = "the big brown fox ran away"
 
@@ -45,9 +45,9 @@ defmodule RegexBuilderTest do
   end
 
   test "Handle negative cases" do
-    assert = Regex.RegexBuilder.build("") == ""
-    assert = Regex.RegexBuilder.build("12234343effeef") == ""
-    assert = Regex.RegexBuilder.build("   ") == ""
-    assert = Regex.RegexBuilder.build("}{32}}%%$3") == ""
+    assert = Regex.Builder.build("") == ""
+    assert = Regex.Builder.build("12234343effeef") == ""
+    assert = Regex.Builder.build("   ") == ""
+    assert = Regex.Builder.build("}{32}}%%$3") == ""
   end
 end
