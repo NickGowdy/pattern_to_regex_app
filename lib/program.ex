@@ -1,21 +1,25 @@
 defmodule Program do
-  @moduledoc """
+   @moduledoc """
   This is a module that takes a pattern specification provided
-  as a commandline arguement into a regex
+  as a commandline arguement into a regex.
   """
-@doc """
-  Says hello to the given `name`.
 
-  Returns `:ok`.
+  @spec main(binary) :: :ok
+  def main(args) do
+    args
+    |> convert_to_string()
+    |> Regex.RegexBuilder.build()
+    |> Regex.source()
+    |> IO.puts()
+  end
 
-  ## Examples
+  @spec main :: :ok
+  def main() do
+    IO.puts("Nothing to process")
+  end
 
-      iex> Program.main(:john)
-      :ok
-
-  """
-  @spec main(nonempty_maybe_improper_list) :: Regex.t()
-  def main(_args = [command | _commands]) do
-   IO.inspect(command)
+  @spec convert_to_string(binary()) :: String.t()
+  defp convert_to_string(binary) do
+    for c <- binary, into: "", do: <<c>>
   end
 end
