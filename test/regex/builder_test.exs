@@ -3,7 +3,7 @@ defmodule Regex.Builder.Test do
 
   test "Match regex with string that has standard tokens" do
     pattern = "foo %{0} is a %{1}"
-    regex =  Regex.Builder.build(pattern)
+    regex = Regex.Builder.build(pattern)
 
     test_case_1 = "foo blah is a bar"
     test_case_2 = "foo blah is a very big boat;"

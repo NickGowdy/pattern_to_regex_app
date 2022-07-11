@@ -1,5 +1,4 @@
 defmodule TokenParser.Greedy do
-
   def parse([]), do: ""
 
   def parse([element | elements], _acc = 0) do
@@ -39,5 +38,4 @@ defmodule TokenParser.Greedy do
       _ -> false
     end
   end
-
 end

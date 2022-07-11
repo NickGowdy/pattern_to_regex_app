@@ -1,5 +1,4 @@
 defmodule TokenParser.Limited do
-
   def parse([]), do: ""
 
   def parse([element | elements], _acc = 0) do
