@@ -39,5 +39,8 @@ correctly.
 
 The regex string is outputted from the Elixir module and used with pcre2grep which writes all the correct matches to `output.txt`
 
+## Areas of improvement
+Some of the tokens work on the assumption that it's a single digit length, for example `%{1S3}"` if it was `%{1S12}"` it would not work correctly. I would do a refactor to make it handle any length.
+
 
 
