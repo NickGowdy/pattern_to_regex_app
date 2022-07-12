@@ -16,14 +16,14 @@ defmodule TokenParser.Simple do
   defp is_token([element | elements], _acc = 2) do
     case Integer.parse(element) do
       {_, ""} ->
-        is_token(elements, 3)
+        is_token(elements, 2)
 
       :error ->
-        false
+       is_token(element, 3)
     end
   end
 
-  defp is_token([element | _elements], _acc = 3) do
+  defp is_token(element, _acc = 3) do
     case element do
       "}" -> true
       _ -> false
