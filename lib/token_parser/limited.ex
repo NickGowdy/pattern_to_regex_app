@@ -23,16 +23,9 @@ defmodule TokenParser.Limited do
       :error ->
         cond do
           String.downcase(element) == "s" -> is_token(elements, 2)
-          Enum.count(elements) == 1 -> is_token(element, 3)
+          element == "}" && Enum.count(elements) == 0 -> true
           true -> false
         end
-    end
-  end
-
-  defp is_token(element, _acc = 3) do
-    case element do
-      "}" -> true
-      _ -> false
     end
   end
 end

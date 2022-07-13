@@ -31,13 +31,13 @@ defmodule Regex.Builder do
 
     is_standard_token = Simple.parse(split_string, 0)
     is_limited_token = Limited.parse(split_string, 0)
-    is_greedy_tokene = Greedy.parse(split_string, 0)
+    is_greedy_token = Greedy.parse(split_string, 0)
 
     cond do
       is_standard_token -> standard_regex()
       is_limited_token -> limited_words_regex(split_string)
-      is_greedy_tokene -> greedy_regex(split_string)
-      !is_standard_token && !is_limited_token -> value <> " "
+      is_greedy_token -> greedy_regex(split_string)
+      !is_standard_token && !is_limited_token && !is_greedy_token -> value <> " "
     end
   end
 
