@@ -18,8 +18,8 @@ defmodule TokenParser.Greedy do
 
   defp is_token([element | elements], _acc = 2) do
     case Integer.parse(element) do
-      {_, ""} ->
-        is_token(elements, 2)
+      {num, ""} ->
+        if num >= 0, do: is_token(elements, 2), else: false
 
       :error ->
        cond do
