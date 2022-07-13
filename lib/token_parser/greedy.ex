@@ -22,18 +22,14 @@ defmodule TokenParser.Greedy do
         is_token(elements, 2)
 
       :error ->
-       is_token(element, 3)
+       cond do
+        String.downcase(element) == "g" -> is_token(elements, 2)
+        true -> is_token(element, 3)
+       end
     end
   end
 
   defp is_token(element, _acc = 3) do
-    case String.downcase(element) do
-      "g" ->  is_token(element, 4)
-      _ -> false
-    end
-  end
-
-  defp is_token(element, _acc = 4) do
     case element do
       "}" -> true
       _ -> false
