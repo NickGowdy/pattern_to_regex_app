@@ -35,7 +35,7 @@ defmodule Regex.Builder do
 
     cond do
       is_standard_token -> standard_regex()
-      is_limited_token -> limited_words_regex(split_string)
+      is_limited_token -> limited_words_regex(value)
       is_greedy_token -> greedy_regex(split_string)
       true -> value <> " "
     end
@@ -43,8 +43,31 @@ defmodule Regex.Builder do
 
   defp standard_regex, do: "[a-zA-Z\s]{0,}" <> " "
 
-  defp limited_words_regex(split_string) do
-    word_limit = Enum.at(split_string, Enum.count(split_string) - 2)
+  defp limited_words_regex(value) do
+
+    word_limit =
+      value
+      |> String.replace(["{", "}", "%"], fn _ -> "" end)
+      |> String.reverse()
+      |> String.split("", trim: true)
+      |> Enum.reduce_while([], fn x, list ->
+
+        case Integer.parse(x) do
+          {num, _} ->
+            list = List.insert_at(list, 0, num)
+            {:cont, list}
+
+          :error ->
+            case String.downcase(x) do
+              "s" ->
+                {:halt, list}
+              _ ->
+                {:halt, list}
+            end
+        end
+      end)
+      |> Enum.join()
+
 
     case Integer.parse(word_limit) do
       {number, ""} ->
