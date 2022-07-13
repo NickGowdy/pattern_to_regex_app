@@ -37,7 +37,7 @@ defmodule Regex.Builder do
       is_standard_token -> standard_regex()
       is_limited_token -> limited_words_regex(split_string)
       is_greedy_token -> greedy_regex(split_string)
-      !is_standard_token && !is_limited_token && !is_greedy_token -> value <> " "
+      true -> value <> " "
     end
   end
 
