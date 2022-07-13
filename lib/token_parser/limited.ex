@@ -1,5 +1,5 @@
 defmodule TokenParser.Limited do
-  def parse([]), do: ""
+  def parse([], _acc = 0), do: false
 
   def parse([element | elements], _acc = 0) do
     case element do
@@ -18,31 +18,18 @@ defmodule TokenParser.Limited do
   defp is_token([element | elements], _acc = 2) do
     case Integer.parse(element) do
       {_, ""} ->
-        is_token(elements, 3)
+        is_token(elements, 2)
 
       :error ->
-        false
+        cond do
+          String.downcase(element) == "s" -> is_token(elements, 2)
+          Enum.count(elements) == 1 -> is_token(element, 3)
+          true -> false
+        end
     end
   end
 
-  defp is_token([element | elements], _acc = 3) do
-    case String.upcase(element) do
-      "S" -> is_token(elements, 4)
-      _ -> false
-    end
-  end
-
-  defp is_token([element | elements], _acc = 4) do
-    case Integer.parse(element) do
-      {_, ""} ->
-        is_token(elements, 5)
-
-      :error ->
-        false
-    end
-  end
-
-  defp is_token([element | _elements], _acc = 5) do
+  defp is_token(element, _acc = 3) do
     case element do
       "}" -> true
       _ -> false

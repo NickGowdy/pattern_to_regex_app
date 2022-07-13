@@ -1,6 +1,7 @@
 defmodule TokenParser.Simple do
   def parse([], _acc = 0), do: false
 
+
   def parse([element | elements], _acc = 0) do
     case element do
       "%" -> is_token(elements, 1)
