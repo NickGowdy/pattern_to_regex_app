@@ -50,7 +50,16 @@ pattern and create a new <token_type>.ex file.
 The regex string is outputted from the Elixir module and used with pcre2grep which writes all the correct matches to `output.txt`
 
 ## Areas of improvement
-Some of the tokens work on the assumption that it's a single digit length, for example `%{1S3}"` if it was `%{1S12}"` it would not work correctly. I would do a refactor to make it handle any length.
+I would refactor the code so every possibly permutation is represented as a lookup in the code. This way we could use every possible
+combination and generate a regex which filters the dataset correctly.
+
+|     Value     |       Regex              |
+|---------------|:------------------------:|
+| word          |  ^([\<word]+)            |
+| space         |    .*?                   |
+| simple token  |  ([a-zA-Z\s]{0,})        |
+| limited token |  [a-zA-Z ]{0,#{number}}  |  
+| greedy token  |  ([a-zA-Z ]{1,})         |  
 
 
 
