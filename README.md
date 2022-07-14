@@ -69,6 +69,11 @@ combination and generate a regex which filters the dataset correctly.
 | limited token |  [a-zA-Z ]{0,#{number}}  |  
 | greedy token  |  ([a-zA-Z ]{1,})         |  
 
+The string `The %{0} brown fox was %{1G} and neither %{2} nor %{3S2}' would roughly translate to:
+```
+The .*? ([a-zA-Z\s]{0,}) .*? ^([\<brown]+) .*? ^([\<fox]+) .*? ^([\<was]+) .*? ([a-zA-Z ]{1,}) .*? ^([\<and]+) .*? ^([\<neither]+) .*? ([a-zA-Z\s]{0,}) .*? ^([\<nor]+) .*? [a-zA-Z ]{0,#{3}} 
+```
+
 
 
 

@@ -46,7 +46,7 @@ defmodule Regex.Builder do
     end
   end
 
-  defp standard_regex, do: "[a-zA-Z\s]{0,}" <> " "
+  defp standard_regex, do: "([a-zA-Z\s]{0,})" <> ".*?" <> " "
 
   defp limited_words_regex(value) do
 
@@ -77,13 +77,13 @@ defmodule Regex.Builder do
     case Integer.parse(word_limit) do
       {number, ""} ->
         modified_number = number + 1
-        "\\W*(\\w+(\\W+|$)){1,#{modified_number}}$" <> " "
+        "[a-zA-Z ]{0,#{number}}" <> ".*?" <> " "
 
       :error ->
         ""
     end
   end
 
-  defp greedy_regex(), do: "[a-zA-Z ]{1,}" <> " "
+  defp greedy_regex(), do: "([a-zA-Z ]{1,})" <> ".*?" <> " "
 
 end
