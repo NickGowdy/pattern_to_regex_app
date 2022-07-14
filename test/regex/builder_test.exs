@@ -34,16 +34,18 @@ defmodule Regex.Builder.Test do
     assert Regex.match?(Regex.Builder.build("foo %{0} is a %{1S0}"), test_case_5) == false
     assert Regex.match?(Regex.Builder.build("foo %{0} is a %{1S10}"), test_case_6) == true
     assert Regex.match?(Regex.Builder.build("foo %{0} is a %{1S3}"), test_case_6) == false
-
   end
 
   test "Match regex with string that has greedy token" do
-    pattern = "the %{0S1} %{1} ran away"
-    regex = Regex.Builder.build(pattern)
+    assert Regex.match?(
+             Regex.Builder.build("bar %{0G} foo %{1}"),
+             "bar foo bar foo bar foo bar foo"
+           ) == true
 
-    test_case_1 = "the big brown fox ran away"
-
-    assert = Regex.match?(regex, test_case_1)
+    assert Regex.match?(
+             Regex.Builder.build("bar %{0G} foo %{1}"),
+             "bar foo bar foo2 bar foo"
+           ) == false
   end
 
   test "Handle negative cases" do

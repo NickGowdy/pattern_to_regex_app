@@ -36,7 +36,7 @@ defmodule Regex.Builder do
     cond do
       is_standard_token -> standard_regex()
       is_limited_token -> limited_words_regex(value)
-      is_greedy_token -> greedy_regex(split_string)
+      is_greedy_token -> greedy_regex()
       true -> value <> " "
     end
   end
@@ -72,23 +72,13 @@ defmodule Regex.Builder do
     case Integer.parse(word_limit) do
       {number, ""} ->
         modified_number = number + 1
-        "\\W*(\\w+(\\W+|$)){1,#{modified_number}}$" <> " "
+        "\\W*(\\w+(\\W+|$)){1,#{modified_number}}$"
 
       :error ->
         ""
     end
   end
 
-  defp greedy_regex(split_string) do
-    word_limit = Enum.at(split_string, Enum.count(split_string) - 3)
+  defp greedy_regex(), do: "[a-zA-Z ]{1,}" <> " "
 
-    case Integer.parse(word_limit) do
-      {number, ""} ->
-        modified_number = number + 1
-        "[a-zA-Z ]{#{modified_number * 2},}" <> " "
-
-      :error ->
-        ""
-    end
-  end
 end
