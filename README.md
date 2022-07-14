@@ -49,7 +49,15 @@ pattern and create a new <token_type>.ex file.
 
 The regex string is outputted from the Elixir module and used with pcre2grep which writes all the correct matches to `output.txt`
 
-## Areas of improvement
+## Improvements
+
+- Can now call program using `cat input.txt | program "foo %{0} is a %{1S3}" > output.txt` because of the use of an alias 
+in the nix shell hook.
+- Bug fixes with the 3 token types (standard, limited, greedy)
+- More unit tests to handle variations of strings with tokens
+- Token parser can now handle numbers bigger than single digits.
+
+## Further improvement
 I would refactor the code so every possibly permutation is represented as a lookup in the code. This way we could use every possible
 combination and generate a regex which filters the dataset correctly.
 
