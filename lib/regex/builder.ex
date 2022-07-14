@@ -21,8 +21,13 @@ defmodule Regex.Builder do
       |> List.to_string()
       |> String.trim_trailing()
 
-    {:ok, regex} = Regex.compile(output)
-    regex
+    case Regex.compile(output) do
+      {:ok, regex}  -> regex
+      {:error, _msg} ->
+        # some logger
+        ""
+    end
+
   end
 
   @spec do_build(String.t()) :: String.t()
