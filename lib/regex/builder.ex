@@ -72,7 +72,7 @@ defmodule Regex.Builder do
     case Integer.parse(word_limit) do
       {number, ""} ->
         modified_number = number + 1
-        "\\W*(\\w+(\\W+|$)){1,#{modified_number}}$"
+        "\\W*(\\w+(\\W+|$)){1,#{modified_number}}$" <> " "
 
       :error ->
         ""

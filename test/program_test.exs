@@ -13,6 +13,11 @@ defmodule Program.Test do
              capture_io(fn ->
                Program.main('foo %{0} is a %{1S3} with a %{2S4}')
              end)
+
+    assert "bar [a-zA-Z ]{1,} foo [a-zA-Z ]{0,}\n" ==
+             capture_io(fn ->
+               Program.main('bar %{0G} foo %{1};')
+             end)
   end
 
   test "Empty argument returns empty string from program" do
