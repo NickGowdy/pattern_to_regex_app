@@ -14,11 +14,9 @@ defmodule Regex.Builder do
   """
   @spec build(binary) :: Regex.t()
   def build(command) do
-    IO.inspect(command, label: "this is the text")
     output =
       command
       |> String.split()
-      |> IO.inspect(label: "split string")
       |> Enum.map(fn string_val -> do_build(string_val) end)
       |> List.to_string()
       |> String.trim_trailing()
@@ -40,9 +38,6 @@ defmodule Regex.Builder do
     is_limited_token = Limited.parse(split_string, 0)
     is_greedy_token = Greedy.parse(split_string, 0)
 
-    IO.inspect("do_build")
-    IO.inspect(value)
-
     cond do
       is_standard_token -> standard_regex()
       is_limited_token -> limited_words_regex(value)
@@ -54,9 +49,6 @@ defmodule Regex.Builder do
   defp standard_regex, do: "([a-zA-Z\s]{0,})" <> ".*?" <> " "
 
   defp limited_words_regex(value) do
-
-    IO.inspect("limited_words_regex")
-    IO.inspect(value)
 
     word_limit =
       value
@@ -85,7 +77,7 @@ defmodule Regex.Builder do
     case Integer.parse(word_limit) do
       {number, ""} ->
         modified_number = number + 1
-        "[a-zA-Z ]{0,#{number}}" <> ".*?" <> " "
+        "[a-zA-Z ]{0,#{modified_number}}" <> ".*?" <> " "
 
       :error ->
         ""

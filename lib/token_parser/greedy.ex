@@ -35,4 +35,6 @@ defmodule TokenParser.Greedy do
       _ -> false
     end
   end
+
+  defp is_token([], _acc), do: false
 end

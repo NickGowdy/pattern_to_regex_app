@@ -2,7 +2,6 @@
 
 # uncomment set -x for debugging
 set -x
-
 # Give access to Elixir module
 chmod +x ./lib/program.ex
 

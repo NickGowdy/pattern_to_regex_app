@@ -32,4 +32,6 @@ defmodule TokenParser.Limited do
         end
     end
   end
+
+  defp is_token([], _acc), do: false
 end
