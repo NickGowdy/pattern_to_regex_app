@@ -22,41 +22,41 @@ defmodule Regex.Builder do
       |> String.trim_trailing()
 
     case Regex.compile(output) do
-      {:ok, regex}  -> regex
+      {:ok, regex} ->
+        regex
+
       {:error, _msg} ->
         # some logger
         ""
     end
-
   end
 
   @spec do_build(String.t()) :: String.t()
   defp do_build(value) do
-    split_string = String.split(value, "", trim: true)
-
-    is_standard_token = Simple.parse(split_string, 0)
-    is_limited_token = Limited.parse(split_string, 0)
-    is_greedy_token = Greedy.parse(split_string, 0)
+    IO.inspect(value)
+    is_standard_token = Simple.parse(value) |> IO.inspect()
+    is_limited_token = Limited.parse(value) |> IO.inspect()
+    is_greedy_token = Greedy.parse(value) |> IO.inspect()
 
     cond do
-      is_standard_token -> standard_regex()
-      is_limited_token -> limited_words_regex(value)
-      is_greedy_token -> greedy_regex()
-      true -> value <> " "
+      is_standard_token == {:ok, 1, ""} -> standard_regex()
+      is_limited_token == {:ok, 1, ""} -> limited_words_regex(value)
+      is_greedy_token == {:ok, 1, ""} -> greedy_regex()
+      true -> exact_word_regex(value)
     end
   end
 
-  defp standard_regex, do: "([a-zA-Z\s]{0,})" <> ".*?" <> " "
+  defp exact_word_regex(word), do: "(#{word})" <> " "
+
+  defp standard_regex, do: "([a-zA-Z\s]{0,})" <> " "
 
   defp limited_words_regex(value) do
-
     word_limit =
       value
       |> String.replace(["{", "}", "%"], fn _ -> "" end)
       |> String.reverse()
       |> String.split("", trim: true)
       |> Enum.reduce_while([], fn x, list ->
-
         case Integer.parse(x) do
           {num, _} ->
             list = List.insert_at(list, 0, num)
@@ -66,6 +66,7 @@ defmodule Regex.Builder do
             case String.downcase(x) do
               "s" ->
                 {:halt, list}
+
               _ ->
                 {:halt, list}
             end
@@ -73,11 +74,10 @@ defmodule Regex.Builder do
       end)
       |> Enum.join()
 
-
     case Integer.parse(word_limit) do
       {number, ""} ->
         modified_number = number + 1
-        "[a-zA-Z ]{0,#{modified_number}}" <> ".*?" <> " "
+        "[a-zA-Z ]{0,#{modified_number}}" <> " "
 
       :error ->
         ""
@@ -85,5 +85,4 @@ defmodule Regex.Builder do
   end
 
   defp greedy_regex(), do: "([a-zA-Z ]{1,})" <> ".*?" <> " "
-
 end
