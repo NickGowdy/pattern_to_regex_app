@@ -10,4 +10,9 @@ pkgs.mkShell {
     elixir
     pcre2
   ];
+
+shellHook =
+  ''
+    alias program='sh program'
+  '';
 }

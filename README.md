@@ -49,8 +49,30 @@ pattern and create a new <token_type>.ex file.
 
 The regex string is outputted from the Elixir module and used with pcre2grep which writes all the correct matches to `output.txt`
 
-## Areas of improvement
-Some of the tokens work on the assumption that it's a single digit length, for example `%{1S3}"` if it was `%{1S12}"` it would not work correctly. I would do a refactor to make it handle any length.
+## Improvements
+
+- Can now call program using `cat input.txt | program "foo %{0} is a %{1S3}" > output.txt` because of the use of an alias 
+in the nix shell hook.
+- Bug fixes with the 3 token types (standard, limited, greedy)
+- More unit tests to handle variations of strings with tokens
+- Token parser can now handle numbers bigger than single digits.
+
+## Further improvement
+I would refactor the code so every possibly permutation is represented as a lookup in the code. This way we could use every possible
+combination and generate a regex which filters the dataset correctly.
+
+|     Value     |       Regex              |
+|---------------|:------------------------:|
+| word          |  ^([\<word]+)            |
+| space         |    .*?                   |
+| simple token  |  ([a-zA-Z\s]{0,})        |
+| limited token |  [a-zA-Z ]{0,#{number}}  |  
+| greedy token  |  ([a-zA-Z ]{1,})         |  
+
+The string `The %{0} brown fox was %{1G} and neither %{2} nor %{3S2}' would roughly translate to:
+```
+The .*? ([a-zA-Z\s]{0,}) .*? ^([\<brown]+) .*? ^([\<fox]+) .*? ^([\<was]+) .*? ([a-zA-Z ]{1,}) .*? ^([\<and]+) .*? ^([\<neither]+) .*? ([a-zA-Z\s]{0,}) .*? ^([\<nor]+) .*? [a-zA-Z ]{0,#{3}} 
+```
 
 
 

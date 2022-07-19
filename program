@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # uncomment set -x for debugging
 set -x
 # Give access to Elixir module

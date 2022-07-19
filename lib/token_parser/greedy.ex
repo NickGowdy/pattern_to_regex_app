@@ -1,5 +1,6 @@
 defmodule TokenParser.Greedy do
-  def parse([]), do: ""
+  def parse([], _acc = 0), do: false
+
 
   def parse([element | elements], _acc = 0) do
     case element do
@@ -17,22 +18,18 @@ defmodule TokenParser.Greedy do
 
   defp is_token([element | elements], _acc = 2) do
     case Integer.parse(element) do
-      {_, ""} ->
-        is_token(elements, 3)
+      {num, ""} ->
+        if num >= 0, do: is_token(elements, 2), else: false
 
       :error ->
-        false
+       cond do
+        String.downcase(element) == "g" -> is_token(elements, 2)
+        true -> is_token(element, 3)
+       end
     end
   end
 
-  defp is_token([element | elements], _acc = 3) do
-    case String.upcase(element) do
-      "G" -> is_token(elements, 4)
-      _ -> false
-    end
-  end
-
-  defp is_token([element | _elements], _acc = 4) do
+  defp is_token(element, _acc = 3) do
     case element do
       "}" -> true
       _ -> false

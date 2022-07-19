@@ -1,7 +1,8 @@
 defmodule TokenParser.Limited do
-  def parse([]), do: ""
+  def parse([], _acc = 0), do: false
 
   def parse([element | elements], _acc = 0) do
+    IO.inspect(elements, label: "These are my elements")
     case element do
       "%" -> is_token(elements, 1)
       _ -> false
@@ -17,35 +18,18 @@ defmodule TokenParser.Limited do
 
   defp is_token([element | elements], _acc = 2) do
     case Integer.parse(element) do
-      {_, ""} ->
-        is_token(elements, 3)
+      {num, ""} ->
+        if num >= 0, do: is_token(elements, 2), else: false
 
       :error ->
-        false
-    end
-  end
-
-  defp is_token([element | elements], _acc = 3) do
-    case String.upcase(element) do
-      "S" -> is_token(elements, 4)
-      _ -> false
-    end
-  end
-
-  defp is_token([element | elements], _acc = 4) do
-    case Integer.parse(element) do
-      {_, ""} ->
-        is_token(elements, 5)
-
-      :error ->
-        false
-    end
-  end
-
-  defp is_token([element | _elements], _acc = 5) do
-    case element do
-      "}" -> true
-      _ -> false
+        IO.inspect(element, label: "Cond")
+        IO.inspect(String.downcase(element) == "s")
+        IO.inspect(element == "}" && Enum.count(elements) == 0)
+        cond do
+          String.downcase(element) == "s" -> is_token(elements, 2)
+          element == "}" && Enum.count(elements) == 0 -> true
+          true -> false
+        end
     end
   end
 
