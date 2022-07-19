@@ -61,17 +61,17 @@ in the nix shell hook.
 I would refactor the code so every possibly permutation is represented as a lookup in the code. This way we could use every possible
 combination and generate a regex which filters the dataset correctly.
 
-|     Value     |       Regex              |
-|---------------|:------------------------:|
-| word          |  ^([\<word]+)            |
-| space         |    .*?                   |
-| simple token  |  ([a-zA-Z\s]{0,})        |
-| limited token |  [a-zA-Z ]{0,#{number}}  |  
-| greedy token  |  ([a-zA-Z ]{1,})         |  
+|     Value     |                   Regex                     |
+|---------------|:-------------------------------------------:|
+| word          |  (\<word>)                                  |
+| space         |  <space_characteer>                         |
+| simple token  |  [a-zA-Z0-9_]+                              |
+| limited token |  ([a-zA-Z0-9]+[^a-zA-Z0-9]*){1,#{number}}$  |  
+| greedy token  |  ([a-zA-Z ]{1,})                            |  
 
 The string `The %{0} brown fox was %{1G} and neither %{2} nor %{3S2}' would roughly translate to:
 ```
-The .*? ([a-zA-Z\s]{0,}) .*? ^([\<brown]+) .*? ^([\<fox]+) .*? ^([\<was]+) .*? ([a-zA-Z ]{1,}) .*? ^([\<and]+) .*? ^([\<neither]+) .*? ([a-zA-Z\s]{0,}) .*? ^([\<nor]+) .*? [a-zA-Z ]{0,#{3}} 
+(The) [a-zA-Z0-9_]+ (brown) (fox) (was) ([a-zA-Z ]{1,}).*? (and) (neither) [a-zA-Z0-9_]+ (nor) ([a-zA-Z0-9]+[^a-zA-Z0-9]*){1,3}$ 
 ```
 
 
