@@ -1,1 +1,24 @@
-foo test is bar
+tee %{0ST} tea
+tee %{0S} tea
+tee %{0ST}a tea
+tee %{0S}a tea
+two 4 tea
+two F@ur tea
+foo blah is a bar
+foo! blah is a bar
+foo blah is a very big boat yay
+foo blah is a very  boat
+foo blah is bar
+foo blah
+foo blah is
+the big brown fox ran away
+bar foo bar foo bar foo bar foo
+foo bar foo bar foo bar fuu bar foo bar foo bar foo
+r.g{}[]|%$^\()e*+?x [i]njection
+rWg{}[]|%$^\()e*+?x [i]njection
+r.g{}[]|$^\()e*+?x [i]njection
+rWg{}[]|$^\()e*+?x [i]njection
+regex injection
+regex [i]njection
+out of } order bracket
+out of %{ order bracket

@@ -33,22 +33,21 @@ defmodule Regex.Builder do
 
   @spec do_build(String.t()) :: String.t()
   defp do_build(value) do
-    IO.inspect(value)
-    is_standard_token = Simple.parse(value) |> IO.inspect()
-    is_limited_token = Limited.parse(value) |> IO.inspect()
-    is_greedy_token = Greedy.parse(value) |> IO.inspect()
+    is_standard_token = Simple.parse(value)
+    is_limited_token = Limited.parse(value)
+    is_greedy_token = Greedy.parse(value)
 
     cond do
-      is_standard_token == {:ok, 1, ""} -> standard_regex()
-      is_limited_token == {:ok, 1, ""} -> limited_words_regex(value)
-      is_greedy_token == {:ok, 1, ""} -> greedy_regex()
+      is_standard_token == :ok -> standard_regex()
+      is_limited_token == :ok -> limited_words_regex(value)
+      is_greedy_token == :ok -> greedy_regex()
       true -> exact_word_regex(value)
     end
   end
 
   defp exact_word_regex(word), do: "(#{word})" <> " "
 
-  defp standard_regex, do: "([a-zA-Z\s]{0,})" <> " "
+  defp standard_regex, do: "[a-zA-Z0-9_]+" <> " "
 
   defp limited_words_regex(value) do
     word_limit =
@@ -77,7 +76,7 @@ defmodule Regex.Builder do
     case Integer.parse(word_limit) do
       {number, ""} ->
         modified_number = number + 1
-        "[a-zA-Z ]{0,#{modified_number}}" <> " "
+        "([a-zA-Z0-9]+[^a-zA-Z0-9]*){1,#{modified_number}}$" <> " "
 
       :error ->
         ""
