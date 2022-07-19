@@ -1,37 +1,18 @@
 defmodule TokenParser.Limited do
-  def parse([], _acc = 0), do: false
+  def parse("%{" <> rest), do: parse_interpolation(rest, 0, false)
+  def parse(_), do: {:error, {:expected, "%{"}}
 
-  def parse([element | elements], _acc = 0) do
-    IO.inspect(elements, label: "These are my elements")
-    case element do
-      "%" -> is_token(elements, 1)
-      _ -> false
-    end
+  defp parse_interpolation("}" <> rest, acc, _s), do: {:ok, acc, rest}
+
+  defp parse_interpolation(<<d>> <> rest, acc, s) when d in ?0..?9 do
+    parse_interpolation(rest, acc * 10 + (d - ?0), s)
   end
 
-  defp is_token([element | elements], _acc = 1) do
-    case element do
-      "{" -> is_token(elements, 2)
-      _ -> false
-    end
+  defp parse_interpolation(<<d>> <> rest, acc, _s = false) when "S" == <<d>> do
+    parse_interpolation(rest, acc * 10 + (d - ?0), true)
   end
 
-  defp is_token([element | elements], _acc = 2) do
-    case Integer.parse(element) do
-      {num, ""} ->
-        if num >= 0, do: is_token(elements, 2), else: false
-
-      :error ->
-        IO.inspect(element, label: "Cond")
-        IO.inspect(String.downcase(element) == "s")
-        IO.inspect(element == "}" && Enum.count(elements) == 0)
-        cond do
-          String.downcase(element) == "s" -> is_token(elements, 2)
-          element == "}" && Enum.count(elements) == 0 -> true
-          true -> false
-        end
-    end
+  defp parse_interpolation(<<d>> <> _rest, _acc, _s = true) when "S" == <<d>> do
+    {:error, {:expected, "digit or `}`"}}
   end
-
-  defp is_token([], _acc), do: false
 end
