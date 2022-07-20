@@ -67,11 +67,11 @@ combination and generate a regex which filters the dataset correctly.
 | space         |  <space_characteer>                         |
 | simple token  |  [a-zA-Z0-9_]+                              |
 | limited token |  ([a-zA-Z0-9]+[^a-zA-Z0-9]*){1,#{number}}$  |  
-| greedy token  |  ([a-zA-Z ]{1,})                            |  
+| greedy token  |  .*                                         |  
 
 The string `The %{0} brown fox was %{1G} and neither %{2} nor %{3S2}' would translate to:
 ```
-(The) [a-zA-Z0-9_]+ (brown) (fox) (was) ([a-zA-Z ]{1,}).*? (and) (neither) [a-zA-Z0-9_]+ (nor) ([a-zA-Z0-9]+[^a-zA-Z0-9]*){1,3}$ 
+(The) [a-zA-Z0-9_]+ (brown) (fox) (was) .* (and) (neither) [a-zA-Z0-9_]+ (nor) ([a-zA-Z0-9]+[^a-zA-Z0-9]*){1,3}$ 
 ```
 
 
