@@ -14,7 +14,7 @@ defmodule Program.Test do
                Program.main('foo %{0} is a %{1S3} with a %{2S4}')
              end)
 
-    assert "(bar) ([a-zA-Z ]{1,}).*? (foo) [a-zA-Z0-9_]+\n" ==
+    assert "(bar) .* (foo) [a-zA-Z0-9_]+\n" ==
              capture_io(fn ->
                Program.main('bar %{0G} foo %{1};')
              end)

@@ -83,5 +83,5 @@ defmodule Regex.Builder do
     end
   end
 
-  defp greedy_regex(), do: "([a-zA-Z ]{1,})" <> ".*?" <> " "
+  defp greedy_regex(), do: ".*" <> " "
 end
